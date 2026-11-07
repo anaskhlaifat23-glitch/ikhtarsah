@@ -1,0 +1,29 @@
+---
+import { amzProduct } from '../lib/amazon';
+interface Props {
+  name: string;
+  asin: string;
+  bestFor: string;
+  points: string[];
+  watch?: string;
+}
+const { name, asin, bestFor, points, watch } = Astro.props;
+---
+<section class="pick">
+  <h3>{name}</h3>
+  <p class="pick-for"><strong>يناسب:</strong> {bestFor}</p>
+  <ul>{points.map((p) => <li>{p}</li>)}</ul>
+  {watch && <p class="pick-watch"><strong>انتبه:</strong> {watch}</p>}
+  <a class="pick-link" href={amzProduct(asin)} rel="sponsored nofollow noopener" target="_blank">شاهد السعر الحالي على أمازون السعودية</a>
+</section>
+
+<style>
+  .pick { border: 1px solid var(--line); border-radius: var(--radius-l); padding: 1.2rem 1.4rem; margin: 1rem 0; max-width: var(--measure); }
+  .pick h3 { margin-top: 0; }
+  .pick-for { margin-bottom: .6rem; }
+  .pick ul { margin: 0 0 .8rem; padding-inline-start: 1.2em; }
+  .pick li { margin-bottom: .3em; }
+  .pick-watch { background: var(--caution-tint); border-radius: var(--radius-s); padding: .5rem .8rem; font-size: .95rem; }
+  .pick-link { display: inline-block; font-family: var(--display); font-weight: 600; background: var(--verdict); color: #fff; text-decoration: none; padding: .6rem 1.1rem; border-radius: 999px; }
+  .pick-link:hover { background: #0b5a42; }
+</style>

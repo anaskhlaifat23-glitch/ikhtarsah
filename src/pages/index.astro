@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import LaserCheck from '../components/LaserCheck.astro';
+import { guides } from '../data/guides';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -26,10 +27,12 @@ const schema = {
   <section class="wrap">
     <h2>أدلة الشراء</h2>
     <div class="guide-list">
-      <a class="guide-item" href="/guides/home-laser-hair-removal/">
-        <h3>كيف تختار جهاز ليزر منزلي (IPL) في السعودية</h3>
-        <p>لمن يصلح ولمن لا يصلح، وما الفرق الحقيقي بين الأجهزة، وكيف تتجنب النسخ المقلدة.</p>
-      </a>
+      {guides.map((g) => (
+        <a class="guide-item" href={g.href}>
+          <h3>{g.title}</h3>
+          <p>{g.blurb}</p>
+        </a>
+      ))}
     </div>
   </section>
 

@@ -40,7 +40,7 @@ const schema = [
   },
 ];
 
-const amz = (q: string) => `https://www.amazon.sa/s?k=${encodeURIComponent(q)}`;
+import { amzSearch as amz } from '../../lib/amazon';
 const brands = [
   { name: 'Philips Lumea (سلسلة 8000 و9000)', q: 'Philips Lumea IPL', note: 'فيها حسّاس للون البشرة (SmartSkin) وملحقات مختلفة حسب المنطقة. الفرق بين السلسلتين في عدد الملحقات والمزايا الإضافية، فقارن قبل أن تدفع أكثر.' },
   { name: 'Beurer (IPL 8500 و IPL 5500)', q: 'Beurer IPL', note: 'ماركة ألمانية للأجهزة المنزلية. حسب وصف المنتج على أمازون، يأتي IPL 8500 بـ 300 ألف ومضة وبطارية مدمجة، و IPL 5500 بـ 200 ألف ومضة.' },
