@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import LaserCheck from '../components/LaserCheck.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'اختار صح',
+  url: 'https://ikhtarsah.com/',
+  inLanguage: 'ar',
+};
+---
+<Base
+  title="اختار صح | أدلة شراء محايدة للمتسوق في السعودية"
+  description="أدلة شراء ومقارنات محايدة بالعربي للمتسوق في السعودية، مع أدوات تساعدك تختار الجهاز المناسب قبل ما تشتري."
+  schema={schema}
+>
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <h1>قبل ما تشتري، اعرف إذا كان يناسبك.</h1>
+      <p class="hero-lead">أدلة شراء بالعربي للمتسوق في السعودية. لا نبيع شيئاً، ولا نكتب "جرّبناه" عن منتج لم نجربه. نشرح الفرق بين الخيارات، ونقول لك متى لا يناسبك المنتج أصلاً.</p>
+    </div>
+    <LaserCheck compact />
+  </section>
+
+  <section class="wrap">
+    <h2>أدلة الشراء</h2>
+    <div class="guide-list">
+      <a class="guide-item" href="/guides/home-laser-hair-removal/">
+        <h3>كيف تختار جهاز ليزر منزلي (IPL) في السعودية</h3>
+        <p>لمن يصلح ولمن لا يصلح، وما الفرق الحقيقي بين الأجهزة، وكيف تتجنب النسخ المقلدة.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap principles">
+    <h2>كيف نكتب توصياتنا</h2>
+    <ul class="prose">
+      <li>نبدأ من مشكلتك، لا من المنتج الأغلى أو الأعلى عمولة.</li>
+      <li>نفرّق بوضوح بين ما جربناه بأنفسنا، وما قيّمناه من المواصفات الرسمية وتجارب المشترين.</li>
+      <li>نقول متى لا يناسبك المنتج، حتى لو خسرنا العمولة.</li>
+    </ul>
+    <a class="btn btn-ghost" href="/how-we-choose/">طريقتنا في الاختيار</a>
+  </section>
+</Base>
+
+<style>
+  .hero { display: grid; gap: 2.2rem; padding-block: clamp(2rem, 6vw, 4.5rem) 1rem; }
+  .hero h1 { max-width: 16ch; }
+  .hero-lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 58ch; }
+  @media (min-width: 980px) {
+    .hero { grid-template-columns: 1fr 1.35fr; align-items: start; }
+    .hero-copy { position: sticky; top: 2rem; }
+  }
+  .guide-list { display: grid; gap: 1rem; }
+  .guide-item { display: block; padding: 1.3rem 1.5rem; border: 1px solid var(--line); border-radius: var(--radius-l); text-decoration: none; color: var(--ink); max-width: 760px; }
+  .guide-item:hover { border-color: var(--verdict); }
+  .guide-item h3 { margin-top: 0; color: var(--verdict); }
+  .guide-item p { margin: 0; color: var(--ink-soft); }
+  .principles { margin-top: 1rem; }
+</style>

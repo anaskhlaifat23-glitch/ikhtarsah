@@ -1,0 +1,102 @@
+:root {
+  --ink: #18212e;
+  --ink-soft: #4a5565;
+  --paper: #ffffff;
+  --mist: #f1f4f2;
+  --line: #d8dee3;
+  --verdict: #0e6b4f;
+  --verdict-tint: #ddefe6;
+  --caution: #a85a06;
+  --caution-tint: #fcefd9;
+  --stop: #a3312a;
+  --stop-tint: #f8e1de;
+  --display: 'Readex Pro', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --body: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --measure: 68ch;
+  --radius-s: 6px;
+  --radius-l: 18px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+img { max-width: 100%; height: auto; }
+
+a { color: var(--verdict); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible { outline: 3px solid var(--verdict); outline-offset: 3px; border-radius: 4px; }
+
+h1, h2, h3 { font-family: var(--display); line-height: 1.3; margin: 0 0 .5em; }
+h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -.01em; }
+h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); font-weight: 600; margin-top: 2em; }
+h3 { font-size: 1.2rem; font-weight: 600; margin-top: 1.6em; }
+p { margin: 0 0 1.1em; }
+
+.wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+.prose { max-width: var(--measure); }
+.prose ul, .prose ol { padding-inline-start: 1.3em; margin: 0 0 1.2em; }
+.prose li { margin-bottom: .45em; }
+
+/* Header */
+.site-header { border-bottom: 1px solid var(--line); background: var(--paper); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .9rem; }
+.brand { display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 700; font-size: 1.35rem; }
+.brand-mark { width: 34px; height: 34px; }
+.site-nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.site-nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.site-nav a:hover, .site-nav a[aria-current='page'] { color: var(--verdict); }
+
+/* Disclosure strip */
+.disclosure { font-size: .9rem; color: var(--ink-soft); background: var(--mist); border-radius: var(--radius-s); padding: .7rem 1rem; margin: 1.2rem 0 1.8rem; }
+
+/* Footer */
+.site-footer { margin-top: 5rem; border-top: 1px solid var(--line); background: var(--mist); font-size: .95rem; color: var(--ink-soft); }
+.site-footer .wrap { padding-block: 2.2rem; display: grid; gap: 1.2rem; }
+.footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.footer-links a { color: var(--ink); }
+
+/* Buttons */
+.btn { display: inline-block; font-family: var(--display); font-weight: 600; font-size: 1rem; padding: .8rem 1.4rem; border-radius: 999px; border: 2px solid var(--verdict); background: var(--verdict); color: #fff; text-decoration: none; cursor: pointer; }
+.btn:hover { background: #0b5a42; border-color: #0b5a42; }
+.btn-ghost { background: transparent; color: var(--verdict); }
+.btn-ghost:hover { background: var(--verdict-tint); }
+
+/* Verdict stamp: the signature element */
+.stamp {
+  --c: var(--verdict);
+  --t: var(--verdict-tint);
+  display: inline-grid; place-items: center;
+  width: 108px; height: 108px; border-radius: 50%;
+  border: 3px solid var(--c); color: var(--c); background: var(--t);
+  font-family: var(--display); font-weight: 700; font-size: 1.15rem; line-height: 1.2; text-align: center;
+  transform: rotate(-8deg);
+  box-shadow: inset 0 0 0 5px var(--t), inset 0 0 0 7px var(--c);
+  flex: none;
+}
+.stamp.caution { --c: var(--caution); --t: var(--caution-tint); }
+.stamp.stop { --c: var(--stop); --t: var(--stop-tint); }
+
+.verdict-box { display: flex; gap: 1.4rem; align-items: center; border: 1px solid var(--line); border-radius: var(--radius-l); padding: 1.4rem 1.6rem; margin: 1.6rem 0; }
+.verdict-box p:last-child { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+  .verdict-box { flex-direction: column; align-items: flex-start; }
+  .site-header .wrap { flex-direction: column; align-items: flex-start; gap: .5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,148 @@
+---
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const skins = [
+  { v: 1, c: '#f6dcc8', t: 'فاتحة جداً', d: 'تحترق دائماً من الشمس ولا تسمرّ' },
+  { v: 2, c: '#eec6a4', t: 'فاتحة', d: 'تحترق بسهولة وتسمرّ قليلاً' },
+  { v: 3, c: '#d8a77f', t: 'حنطية فاتحة', d: 'تحترق أحياناً وتسمرّ تدريجياً' },
+  { v: 4, c: '#b98457', t: 'حنطية', d: 'نادراً ما تحترق وتسمرّ بسهولة' },
+  { v: 5, c: '#8a5a37', t: 'سمراء', d: 'نادراً جداً ما تحترق' },
+  { v: 6, c: '#4e3020', t: 'سمراء داكنة', d: 'لا تحترق تقريباً' },
+];
+const hairs = [
+  { v: 'black', c: '#1b1b1b', t: 'أسود' },
+  { v: 'darkbrown', c: '#4a2f1d', t: 'بني غامق' },
+  { v: 'lightbrown', c: '#8b5e3c', t: 'بني فاتح' },
+  { v: 'blonde', c: '#d9b56b', t: 'أشقر' },
+  { v: 'red', c: '#a6462a', t: 'أحمر' },
+  { v: 'grey', c: '#c9c9c9', t: 'أبيض أو رمادي' },
+];
+---
+<section class:list={['lc', { 'lc-compact': compact }]} aria-labelledby="lc-title">
+  <h2 id="lc-title" class="lc-title">هل جهاز الليزر المنزلي يناسبك؟</h2>
+  <p class="lc-lead">اختر لون بشرتك ولون الشعر الذي تريد إزالته. النتيجة فورية، ولا نحفظ أي بيانات.</p>
+
+  <form class="lc-form" novalidate>
+    <fieldset>
+      <legend>لون البشرة في المنطقة التي ستعالجها</legend>
+      <div class="lc-swatches">
+        {skins.map((s) => (
+          <label class="lc-swatch">
+            <input type="radio" name="skin" value={s.v} />
+            <span class="lc-chip" style={`--chip:${s.c}`}></span>
+            <span class="lc-label"><strong>{s.t}</strong><small>{s.d}</small></span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>لون الشعر</legend>
+      <div class="lc-swatches lc-hair">
+        {hairs.map((h) => (
+          <label class="lc-swatch">
+            <input type="radio" name="hair" value={h.v} />
+            <span class="lc-chip" style={`--chip:${h.c}`}></span>
+            <span class="lc-label"><strong>{h.t}</strong></span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="lc-result" aria-live="polite" hidden>
+    <div class="lc-stamp stamp"></div>
+    <div>
+      <h3 class="lc-headline"></h3>
+      <p class="lc-body"></p>
+      <p class="lc-next"></p>
+    </div>
+  </div>
+  <p class="lc-note">هذه أداة توعوية وليست تشخيصاً طبياً. إن كانت لديك حالة جلدية، أو كنتِ حاملاً، أو تتناول أدوية تزيد حساسية الجلد للضوء، استشر طبيب جلدية قبل الاستخدام.</p>
+</section>
+
+<style>
+  .lc { background: var(--mist); border-radius: var(--radius-l); padding: clamp(1.2rem, 3vw, 2.2rem); }
+  .lc-title { margin-top: 0; }
+  .lc-lead { color: var(--ink-soft); }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.4rem; }
+  legend { font-family: var(--display); font-weight: 600; margin-bottom: .7rem; }
+  .lc-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; }
+  .lc-hair { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .lc-swatch { position: relative; display: flex; gap: .6rem; align-items: center; background: var(--paper); border: 2px solid var(--line); border-radius: 12px; padding: .55rem .7rem; cursor: pointer; line-height: 1.4; }
+  .lc-swatch input { position: absolute; opacity: 0; }
+  .lc-swatch:has(input:checked) { border-color: var(--verdict); box-shadow: 0 0 0 2px var(--verdict-tint); }
+  .lc-swatch:has(input:focus-visible) { outline: 3px solid var(--verdict); outline-offset: 2px; }
+  .lc-chip { width: 30px; height: 30px; border-radius: 50%; background: var(--chip); border: 1px solid rgba(0,0,0,.15); flex: none; }
+  .lc-label { display: grid; }
+  .lc-label small { color: var(--ink-soft); font-size: .78rem; }
+  .lc-result { display: flex; gap: 1.4rem; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 1.4rem; }
+  .lc-result[hidden] { display: none; }
+  .lc-result h3 { margin-top: 0; }
+  .lc-result p:last-child { margin-bottom: 0; }
+  .lc-note { font-size: .85rem; color: var(--ink-soft); margin: 1.2rem 0 0; }
+  .lc-stamp { animation: lc-in .35s ease-out; }
+  @keyframes lc-in { from { transform: rotate(-30deg) scale(.6); opacity: 0; } to { transform: rotate(-8deg) scale(1); opacity: 1; } }
+  @media (max-width: 640px) { .lc-result { flex-direction: column; align-items: flex-start; } }
+</style>
+
+<script>
+  type Verdict = { cls: string; stamp: string; head: string; body: string; next: string };
+
+  function decide(skin: number, hair: string): Verdict {
+    const lightHair = ['blonde', 'red', 'grey'].includes(hair);
+    if (lightHair) {
+      return {
+        cls: 'stop', stamp: 'لا يناسب<br>غالباً',
+        head: 'الليزر المنزلي لن يعطيك نتيجة على هذا الشعر غالباً',
+        body: 'أجهزة IPL تعمل على صبغة الشعر الداكنة. الشعر الأبيض والرمادي والأشقر والأحمر لا يمتص الضوء بما يكفي، فتكون النتيجة ضعيفة أو معدومة مهما كان الجهاز غالياً.',
+        next: 'البدائل الأنسب لك: ماكينة إزالة شعر أو حلاقة كهربائية للاستخدام المنزلي، أو جلسات إزالة بالكهرباء (Electrolysis) في عيادة.',
+      };
+    }
+    if (skin === 6) {
+      return {
+        cls: 'stop', stamp: 'لا<br>يناسبك',
+        head: 'معظم أجهزة IPL المنزلية غير مصممة لهذه البشرة',
+        body: 'الضوء يتجه للصبغة الداكنة، وعندما تكون البشرة داكنة جداً يمتص الجلد جزءاً من الطاقة، فيرتفع خطر الحروق وتغيّر لون الجلد.',
+        next: 'الخيار الأكثر أماناً: جلسات في عيادة جلدية بأجهزة مخصصة للبشرة الداكنة (مثل Nd:YAG) بعد استشارة الطبيب.',
+      };
+    }
+    if (skin === 5) {
+      return {
+        cls: 'caution', stamp: 'انتبه',
+        head: 'ممكن، لكن بجهاز يدعم البشرة السمراء فقط',
+        body: 'بعض الأجهزة تدعم البشرة السمراء بمستويات طاقة أقل، وبعضها لا يدعمها إطلاقاً. اختر جهازاً فيه حسّاس للون البشرة يمنع الإطلاق تلقائياً إن كانت البشرة داكنة على المستوى المختار.',
+        next: 'قبل الشراء: راجع جدول ألوان البشرة في دليل الجهاز، وجرّب ومضة اختبار على منطقة صغيرة وانتظر 24 ساعة.',
+      };
+    }
+    return {
+      cls: '', stamp: 'صح',
+      head: 'أنت مرشح جيد لليزر المنزلي',
+      body: 'تباين الشعر الداكن مع البشرة الفاتحة أو الحنطية هو الحالة التي صُممت لها أجهزة IPL، وفيها تكون النتائج عادة أوضح.',
+      next: 'الخطوة التالية: اقرأ دليل اختيار الجهاز لتعرف الفرق بين الأجهزة في عدد الومضات والملحقات وحسّاس البشرة.',
+    };
+  }
+
+  document.querySelectorAll<HTMLElement>('.lc').forEach((root) => {
+    const form = root.querySelector('form')!;
+    const result = root.querySelector<HTMLElement>('.lc-result')!;
+    form.addEventListener('change', () => {
+      const skin = form.querySelector<HTMLInputElement>('input[name=skin]:checked');
+      const hair = form.querySelector<HTMLInputElement>('input[name=hair]:checked');
+      if (!skin || !hair) return;
+      const v = decide(Number(skin.value), hair.value);
+      const stamp = result.querySelector<HTMLElement>('.lc-stamp')!;
+      stamp.className = 'lc-stamp stamp ' + v.cls;
+      stamp.innerHTML = v.stamp;
+      result.querySelector('.lc-headline')!.textContent = v.head;
+      result.querySelector('.lc-body')!.textContent = v.body;
+      const next = result.querySelector<HTMLElement>('.lc-next')!;
+      next.textContent = v.next;
+      if (v.cls === '') {
+        next.innerHTML += ' <a href="/guides/home-laser-hair-removal/">اقرأ دليل الاختيار</a>';
+      }
+      result.hidden = false;
+      // restart stamp animation
+      stamp.style.animation = 'none'; void stamp.offsetWidth; stamp.style.animation = '';
+    });
+  });
+</script>
