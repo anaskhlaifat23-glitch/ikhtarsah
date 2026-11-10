@@ -18,3 +18,10 @@ export const guides: { href: string; title: string; blurb: string; category: Cat
   { href: '/guides/philips-oneblade-which-model/', title: 'أي جهاز Philips OneBlade يناسبك؟', blurb: 'للوجه فقط، للوجه والجسم، أو للمناطق الحساسة، وتكلفة الشفرات البديلة.', category: 'grooming' },
   { href: '/guides/electric-toothbrush-water-flosser/', title: 'فرشاة أسنان كهربائية أم خيط مائي؟', blurb: 'الفرق بين Vitality و Pro 3 و iO، ومتى تحتاج خيطاً مائياً.', category: 'oral-care' },
 ];
+
+export function countLabel(n: number): string {
+  if (n === 1) return 'دليل واحد';
+  if (n === 2) return 'دليلان';
+  if (n >= 3 && n <= 10) return `${n} أدلة`;
+  return `${n} دليلاً`;
+}

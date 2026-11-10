@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import LaserCheck from '../components/LaserCheck.astro';
-import { guides, categories } from '../data/guides';
+import { guides, categories, countLabel } from '../data/guides';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -34,7 +34,7 @@ const featured = guides.filter((g) => g.category === 'skincare');
         <a class="cat" href={`/guides/#${c.id}`}>
           <h3>{c.title}</h3>
           <p>{c.blurb}</p>
-          <span class="count">{guides.filter((g) => g.category === c.id).length} أدلة</span>
+          <span class="count">{countLabel(guides.filter((g) => g.category === c.id).length)}</span>
         </a>
       ))}
     </div>

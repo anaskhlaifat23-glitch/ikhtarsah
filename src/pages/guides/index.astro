@@ -1,11 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { guides, categories } from '../../data/guides';
+import { guides, categories, countLabel } from '../../data/guides';
 ---
 <Base title="أدلة الشراء | اختار صح" description="أدلة شراء محايدة بالعربي في العناية بالبشرة وإزالة الشعر والعناية الرجالية والعناية بالفم، تشرح الفرق بين الخيارات ومتى لا يناسبك المنتج.">
   <section class="wrap" style="padding-top:2.5rem">
     <h1>أدلة الشراء</h1>
-    <p class="lead">{guides.length} دليلاً مكتوبة بالعربي من المواصفات الرسمية والمصادر الطبية المعتمدة. نقول بوضوح متى لم نجرّب المنتج بأنفسنا.</p>
+    <p class="lead">{countLabel(guides.length)} مكتوبة بالعربي من المواصفات الرسمية والمصادر الطبية المعتمدة. نقول بوضوح متى لم نجرّب المنتج بأنفسنا.</p>
     <nav class="cat-jump" aria-label="الأقسام">
       {categories.map((c) => <a href={`#${c.id}`}>{c.title}</a>)}
     </nav>
