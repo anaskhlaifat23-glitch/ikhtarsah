@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import LaserCheck from '../components/LaserCheck.astro';
-import { guides } from '../data/guides';
+import { guides, categories } from '../data/guides';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -10,55 +10,84 @@ const schema = {
   url: 'https://ikhtarsah.com/',
   inLanguage: 'ar',
 };
+const featured = guides.filter((g) => g.category === 'skincare');
 ---
 <Base
-  title="اختار صح | أدلة شراء محايدة للمتسوق في السعودية"
-  description="أدلة شراء ومقارنات محايدة بالعربي للمتسوق في السعودية، مع أدوات تساعدك تختار الجهاز المناسب قبل ما تشتري."
+  title="اختار صح | أدلة شراء محايدة للعناية والجمال للمتسوق في السعودية"
+  description="أدلة شراء ومقارنات محايدة بالعربي في العناية بالبشرة وإزالة الشعر والعناية الرجالية والعناية بالفم، للمتسوق في السعودية والخليج."
   schema={schema}
 >
   <section class="wrap hero">
-    <div class="hero-copy">
-      <h1>قبل ما تشتري، اعرف إذا كان يناسبك.</h1>
-      <p class="hero-lead">أدلة شراء بالعربي للمتسوق في السعودية. لا نبيع شيئاً، ولا نكتب "جرّبناه" عن منتج لم نجربه. نشرح الفرق بين الخيارات، ونقول لك متى لا يناسبك المنتج أصلاً.</p>
+    <p class="kicker">أدلة شراء مستقلة بالعربي</p>
+    <h1>قبل ما تشتري منتج عناية، اعرف إذا كان يناسبك.</h1>
+    <p class="hero-lead">نكتب للمتسوق في السعودية والخليج أدلة واضحة في العناية بالبشرة والأجهزة الشخصية: ما الذي يفرق فعلاً بين الخيارات، وما الذي تبحث عنه على العبوة، ومتى لا يناسبك المنتج أصلاً. لا نبيع شيئاً، ولا نكتب "جرّبناه" عن منتج لم نجربه.</p>
+    <div class="hero-actions">
+      <a class="btn" href="/guides/basic-skincare-routine/">ابدأ بروتين البشرة الأساسي</a>
+      <a class="btn btn-ghost" href="/guides/">كل الأدلة</a>
     </div>
-    <LaserCheck compact />
   </section>
 
   <section class="wrap">
-    <h2>أدلة الشراء</h2>
-    <div class="guide-list">
-      {guides.map((g) => (
-        <a class="guide-item" href={g.href}>
-          <h3>{g.title}</h3>
-          <p>{g.blurb}</p>
+    <h2>تصفّح حسب القسم</h2>
+    <div class="cats">
+      {categories.map((c) => (
+        <a class="cat" href={`/guides/#${c.id}`}>
+          <h3>{c.title}</h3>
+          <p>{c.blurb}</p>
+          <span class="count">{guides.filter((g) => g.category === c.id).length} أدلة</span>
         </a>
       ))}
     </div>
   </section>
 
+  <section class="wrap">
+    <h2>الأحدث في العناية بالبشرة</h2>
+    <div class="cards">
+      {featured.map((g) => (
+        <a class="card" href={g.href}><h3>{g.title}</h3><p>{g.blurb}</p></a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap tool">
+    <div class="tool-copy">
+      <h2>أداة: هل جهاز الليزر المنزلي يناسبك؟</h2>
+      <p>قبل أن تدفع على جهاز IPL، اختر لون بشرتك ولون شعرك واعرف النتيجة فوراً. لا نحفظ أي بيانات.</p>
+      <a href="/guides/home-laser-hair-removal/">اقرأ دليل اختيار جهاز الليزر</a>
+    </div>
+    <LaserCheck compact />
+  </section>
+
   <section class="wrap principles">
-    <h2>كيف نكتب توصياتنا</h2>
+    <h2>كيف نكتب أدلتنا</h2>
     <ul class="prose">
-      <li>نبدأ من مشكلتك، لا من المنتج الأغلى أو الأعلى عمولة.</li>
-      <li>نفرّق بوضوح بين ما جربناه بأنفسنا، وما قيّمناه من المواصفات الرسمية وتجارب المشترين.</li>
-      <li>نقول متى لا يناسبك المنتج، حتى لو خسرنا العمولة.</li>
+      <li>نبدأ من حاجتك، لا من المنتج الأغلى أو الأعلى عمولة.</li>
+      <li>نعتمد على المواصفات الرسمية والمصادر الطبية المعتمدة، مثل الأكاديمية الأمريكية للأمراض الجلدية، ونذكر مصادرنا.</li>
+      <li>نفرّق بوضوح بين ما جربناه بأنفسنا وما قيّمناه من المواصفات.</li>
+      <li>نقول متى لا يناسبك المنتج، ومتى تحتاج طبيباً بدل منتج.</li>
     </ul>
     <a class="btn btn-ghost" href="/how-we-choose/">طريقتنا في الاختيار</a>
   </section>
 </Base>
 
 <style>
-  .hero { display: grid; gap: 2.2rem; padding-block: clamp(2rem, 6vw, 4.5rem) 1rem; }
-  .hero h1 { max-width: 16ch; }
-  .hero-lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 58ch; }
-  @media (min-width: 980px) {
-    .hero { grid-template-columns: 1fr 1.35fr; align-items: start; }
-    .hero-copy { position: sticky; top: 2rem; }
-  }
-  .guide-list { display: grid; gap: 1rem; }
-  .guide-item { display: block; padding: 1.3rem 1.5rem; border: 1px solid var(--line); border-radius: var(--radius-l); text-decoration: none; color: var(--ink); max-width: 760px; }
-  .guide-item:hover { border-color: var(--verdict); }
-  .guide-item h3 { margin-top: 0; color: var(--verdict); }
-  .guide-item p { margin: 0; color: var(--ink-soft); }
-  .principles { margin-top: 1rem; }
+  .hero { padding-block: clamp(2.2rem, 7vw, 5rem) 1.5rem; }
+  .kicker { color: var(--verdict); font-weight: 600; margin: 0 0 .6rem; }
+  .hero h1 { max-width: 20ch; }
+  .hero-lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 62ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+  .cats { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .cat { display: flex; flex-direction: column; gap: .4rem; padding: 1.3rem 1.4rem; border-radius: var(--radius-l); background: var(--mist); text-decoration: none; color: var(--ink); border: 1px solid transparent; }
+  .cat:hover { border-color: var(--verdict); }
+  .cat h3 { margin: 0; color: var(--verdict); }
+  .cat p { margin: 0; color: var(--ink-soft); font-size: .95rem; flex: 1; }
+  .cat .count { font-size: .85rem; font-weight: 600; color: var(--ink); }
+  .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .card { display: block; padding: 1.2rem 1.4rem; border: 1px solid var(--line); border-radius: var(--radius-l); text-decoration: none; color: var(--ink); }
+  .card:hover { border-color: var(--verdict); }
+  .card h3 { margin: 0 0 .4rem; color: var(--verdict); font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+  .tool { display: grid; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  @media (min-width: 980px) { .tool { grid-template-columns: 1fr 1.35fr; align-items: start; } }
+  .principles { margin-top: 2.5rem; }
 </style>

@@ -1,13 +1,38 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { guides } from '../../data/guides';
+import { guides, categories } from '../../data/guides';
 ---
-<Base title="أدلة الشراء | اختار صح" description="أدلة شراء محايدة بالعربي تشرح الفرق بين الخيارات ومتى لا يناسبك المنتج.">
-  <section class="wrap prose" style="padding-top:2.5rem">
+<Base title="أدلة الشراء | اختار صح" description="أدلة شراء محايدة بالعربي في العناية بالبشرة وإزالة الشعر والعناية الرجالية والعناية بالفم، تشرح الفرق بين الخيارات ومتى لا يناسبك المنتج.">
+  <section class="wrap" style="padding-top:2.5rem">
     <h1>أدلة الشراء</h1>
-    <h2>العناية الشخصية</h2>
-    <ul>
-      {guides.map((g) => <li><a href={g.href}>{g.title}</a> — {g.blurb}</li>)}
-    </ul>
+    <p class="lead">{guides.length} دليلاً مكتوبة بالعربي من المواصفات الرسمية والمصادر الطبية المعتمدة. نقول بوضوح متى لم نجرّب المنتج بأنفسنا.</p>
+    <nav class="cat-jump" aria-label="الأقسام">
+      {categories.map((c) => <a href={`#${c.id}`}>{c.title}</a>)}
+    </nav>
+    {categories.map((c) => (
+      <section id={c.id} class="cat">
+        <h2>{c.title}</h2>
+        <p class="cat-blurb">{c.blurb}</p>
+        <div class="cards">
+          {guides.filter((g) => g.category === c.id).map((g) => (
+            <a class="card" href={g.href}><h3>{g.title}</h3><p>{g.blurb}</p></a>
+          ))}
+        </div>
+      </section>
+    ))}
   </section>
 </Base>
+
+<style>
+  .lead { color: var(--ink-soft); font-size: 1.1rem; max-width: 60ch; }
+  .cat-jump { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.4rem 0 1rem; }
+  .cat-jump a { padding: .45rem 1rem; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--ink); font-weight: 500; }
+  .cat-jump a:hover { border-color: var(--verdict); color: var(--verdict); }
+  .cat { margin-top: 2.6rem; scroll-margin-top: 1rem; }
+  .cat-blurb { color: var(--ink-soft); margin-top: -.4rem; }
+  .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .card { display: block; padding: 1.2rem 1.4rem; border: 1px solid var(--line); border-radius: var(--radius-l); text-decoration: none; color: var(--ink); background: var(--paper); }
+  .card:hover { border-color: var(--verdict); }
+  .card h3 { margin: 0 0 .4rem; color: var(--verdict); font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+</style>
